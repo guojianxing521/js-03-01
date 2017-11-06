@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#box1{
+				width: 100px;
+				height: 100px;
+				background-color: pink;
+				position: absolute;
+				left: 100px;
+				top: 100px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box1"></div>
+	<script>
+		//写一个拖拽构造函数
+			function Drag(id){
+				this.ele = document.getElementById(id); 
+				//
+				this.disX = 0;
+				this.disY = 0;
+				this.move();
+			}
+			//给元素原型挂载move函数
+			Drag.prototype.move=function(){
+				var that = this;//存一下当前的this对象
+				//第一件事，给对象添加onmousedown事件
+				this.ele.onmousedown = function(e){
+					e=e||event;
+					//获取固定宽度和高度
+					that.disX = e.clientX - this.offsetLeft;
+					that.disY = e.clientY - this.offsetTop;
+					
+					//给文档添加鼠标移动事件、
+					document.onmousemove = function(){
+						that.fnMove();
+					}
+					document.onmouseup = that.fnUp;
+					
+				}
+				return false;
+				
+			}
+			Drag.prototype.fnMove = function(e){
+				 e=e||event;
+			  
+			  this.ele.style.left = e.clientX - this.disX+'px';
+			  this.ele.style.top = e.clientY - this.disY+'px';
+			  
+				
+		}
+			Drag.prototype.fnUp=function(){
+				document.onmousemove = null;
+			}
+			new Drag('box1');
+	</script>
+	</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div div{
+			width:300px;
+			height: 300px;
+			border: 1px solid #000000;
+			display: none;
+			font: 50px/300px "微软雅黑";
+			text-align: center;
+		}
+		.active{
+			background-color: pink;
+		}
+		</style>
+		
+	</head>
+	<body>
+		<div id="box1">
+		<input type="button" value="按钮1" class="active"/>
+		<input type="button" value="按钮2"/>
+		<input type="button" value="按钮3"/>
+		<div style="display: block;">内容一</div>
+		<div>内容二</div>
+		<div>内容三</div>
+		</div>
+		<script>
+		(function(window){
+			//创建一个构造函数，挂载各个元素
+			function Tab(id){
+				this.parent = document.getElementById(id);
+				this.aIpt = this.parent.getElementsByTagName('input');
+				this.aDiv = this.parent.getElementsByTagName('div');
+				this.init();//执行初始化函数
+			}
+			//初始化函数，点击事件
+			
+			Tab.prototype.init = function(){
+				var that = this;
+//				console.log(that);
+				for(var i=0;i<this.aIpt.length;i++){
+					this.aIpt[i].index = i;
+//					 console.log(this);
+					this.aIpt[i].onclick = function(){
+						
+						that.fnTab(this.index);
+//						console.log(that);
+//						console.log(this);
+					};
+				}
+			}
+			
+			Tab.prototype.fnTab = function(idx){
+				//暴力清除
+				for(j=0;j<this.aIpt.length;j++){
+					this.aIpt[j].className = '';
+					this.aDiv[j].style.display = 'none';
+				}
+				//让当前的显示
+				this.aIpt[idx].className ='active';
+				this.aDiv[idx].style.display = 'block';
+//				console.log(this);
+				
+			}
+			//暴露出来
+			window.Tab = Tab;
+		})(window)
+		//实例化对象
+		var tab = new Tab('box1');
+		</script>
+	</body>
+</html>

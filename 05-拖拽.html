@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#box1{
+				width: 100px;
+				height: 100px;
+				background-color: red;
+				position: absolute;
+				left: 100px;
+				top: 100px;
+			}
+			#box2{
+				width: 100px;
+				height: 100px;
+				background-color:blue;
+				position: absolute;
+				left: 100px;
+				top: 200px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box1"></div>
+		<div id="box2"></div>
+		<script>
+			function Drag(id){
+				this.ele = document.getElementById(id);
+				this.disX=0;
+				this.disY=0;
+				this.fnDown();
+			}
+			Drag.prototype.fnDown =function(){
+				var that = this;
+				this.ele.onmousedown = function(e){
+				e=e||event;
+				
+				that.disX = e.clientX - this.offsetLeft;
+				that.disY = e.clientY - this.offsetTop;
+				
+				   document.onmousemove =function(){
+			    	that.fnMove();
+			       } //this.fnMove;
+			       document.onmouseup = function(){
+			       	that.fnUp();
+			   }
+				}
+				return false;
+			   
+			}
+           Drag.prototype.fnMove = function(e){
+           	  e= e||event;
+           	  //注意这里的this
+           	  this.ele.style.left = e.clientX - this.disX +'px';
+           	  this.ele.style.top  = e.clientY - this.disY+'px';
+           	  
+           }
+         
+           Drag.prototype.fnUp= function(){
+           	document.onmousemove = null;
+           }
+         
+           new Drag('box1');
+           new Drag('box2');
+           
+		</script>
+	</body>
+</html>

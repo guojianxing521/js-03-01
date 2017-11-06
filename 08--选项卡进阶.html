@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div div{
+			width:300px;
+			height: 300px;
+			border: 1px solid #000000;
+			display: none;
+			font: 50px/300px "微软雅黑";
+			text-align: center;
+		}
+		.active{
+			background-color: pink;
+		}
+		</style>
+		
+	</head>
+	<body>
+		<button>让第一个选项卡停止播放</button>
+		<button>让第二个选项卡自动播放</button>
+		<button>让第一个选项卡和第二个选项卡反转</button>
+		<div id="box1">
+		<input type="button" value="按钮1" class="active"/>
+		<input type="button" value="按钮2"/>
+		<input type="button" value="按钮3"/>
+		<div style="display: block;">内容一</div>
+		<div>内容二</div>
+		<div>内容三</div>
+		</div>
+		<div id="box2">
+		<input type="button" value="按钮1" class="active"/>
+		<input type="button" value="按钮2"/>
+		<input type="button" value="按钮3"/>
+		<div style="display: block;">内容一</div>
+		<div>内容二</div>
+		<div>内容三</div>
+		</div>
+		<script src="tab.js"></script>
+		<script>
+		//实例化对象
+	   var but = document.getElementsByTagName("button");
+	  
+		var tab1 = new Tab('box1');
+		tab1.autoplay();
+		var tab2 = new Tab('box2');
+
+		 but[0].onclick = function(){
+			tab1.stop();
+		}
+		  but[1].onclick = function(){
+			tab2.autoplay();
+		}
+		 but[2].onclick = function(){
+			if(tab1.onoff){
+				tab1.stop();
+			}else{
+				tab1.autoplay();
+			}
+			if(tab2.onoff){
+				tab2.stop();
+			}else{
+				tab2.autoplay();
+			}
+		}
+		</script>
+	</body>
+</html>
